@@ -57,4 +57,10 @@ package() {
   msg2 "Copying systemd service configuration file..."
   install -Dm644 "${_gitname}/system_config/sam-solution-daemon-client.service" \
     "${pkgdir}/usr/lib/systemd/system/sam-solution-daemon-client.service"
+
+  msg2 "Updating package ownership to root:root..."
+  chown -R root:root "${pkgdir}/"
+
+  msg2 "Hiding readability of the configuration file for everyone except root..."
+  chmod 600 "${pkgdir}/usr/share/${pkgname}/config/base.config.json"
 }
