@@ -1,0 +1,3 @@
+pkgname="sam-solution-daemon-client"
+
+chmod 600 "/usr/share/${pkgname}/config/base.config.json"

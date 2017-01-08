@@ -1,0 +1,13 @@
+Source: sam-solution-daemon-client
+Section: utils
+Priority: optional
+Maintainer: ${maintainer}
+Standards-Version: 3.9.8
+Homepage: https://eip-sam.github.io/
+Vcs-Git: https://github.com/EIP-SAM/SAM-Solution-Daemon-Client.git
+Vcs-Browser: https://github.com/EIP-SAM/SAM-Solution-Daemon-Client.git
+
+Package: sam-solution-daemon-client
+Architecture: all
+Depends: ${misc:Depends}
+Description: System Administration Manager Solution: Localhost controller

@@ -1,0 +1,31 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: sam-solution-daemon-client
+Source: https://github.com/EIP-SAM/SAM-Solution-Daemon-Client
+
+Files: *
+Copyright: 2015-2017 ${maintainer}
+License: LGPL-3.0
+
+Files: usr/* lib/* share/*
+Copyright: 2015-2017 EIP-SAM <samsolution_2017@labeip.epitech.eu>
+License: LGPL-3.0
+
+Files: usr/share/node_modules/*
+Copyright: 2017 See licence file in each directory
+License: *
+
+License: LGPL-3.0
+ GNU LESSER GENERAL PUBLIC LICENSE
+ Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+
+ Everyone is permitted to copy and distribute verbatim copies of this license
+ document, but changing it is not allowed.
+
+ This version of the GNU Lesser General Public License incorporates the terms
+ and conditions of version 3 of the GNU General Public License, supplemented by
+ the additional permissions listed below.
+
+ https://www.gnu.org/licenses/lgpl-3.0.en.html
+ https://opensource.org/licenses/lgpl-3.0.html
