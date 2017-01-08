@@ -24,7 +24,7 @@ pkgver() {
 
 prepare() {
   cd "${_gitname}"
-  echo "copying example configuration files as default..."
+  msg2 "Copying example configuration files as default..."
   for f in config/*config.json.example; do
     cp -v "$f" "`echo $f | sed s/json.example/json/`"
   done
@@ -32,29 +32,29 @@ prepare() {
 
 build() {
   cd "${_gitname}"
-  echo "installing npm dependancies..."
+  msg2 "Installing npm dependancies..."
   npm install
 
   cd -
-  echo "replacing '\${pkgdir}' references by '/usr/share'..."
+  msg2 "Replacing '\${pkgdir}' references by '/usr/share'..."
   local -x _sed_substitute="s|`pwd`|/usr/share|g"
   find ${_gitname}/ -type f -exec sed -i "$_sed_substitute" {} +
 }
 
 package() {
-  echo "creating target install directory..."
+  msg2 "Creating target install directory..."
   mkdir -p "${pkgdir}/usr/share/${_pkgname}"
 
-  echo "copying source files to target install directory..."
+  msg2 "Copying source files to target install directory..."
   cp -a "${_gitname}"/* "${pkgdir}/usr/share/${_pkgname}/"
 
-  echo "creating system configuration directory..."
+  msg2 "Creating system configuration directory..."
   mkdir -p "${pkgdir}/etc/${_pkgname}"
 
-  echo "linking configuration file to system configuration directory..."
+  msg2 "Linking configuration file to system configuration directory..."
   ln -s "/usr/share/${_pkgname}/config/base.config.json" "${pkgdir}/etc/${_pkgname}"
 
-  echo "copying systemd service configuration file..."
+  msg2 "Copying systemd service configuration file..."
   install -Dm644 "${_gitname}/system_config/sam-solution-daemon-client.service" \
     "${pkgdir}/usr/lib/systemd/system/sam-solution-daemon-client.service"
 }
