@@ -28,16 +28,16 @@ package() {
   msg2 "Renaming extracted folder to match package name..."
   mv "${pkgdir}/usr/share/${_pkgname}" "${pkgdir}/usr/share/${pkgname}"
 
-  msg2 "Updating package ownership to root:root..."
-  chown -R root:root "${pkgdir}/"
-
   msg2 "Linking configuration file to system configuration directory..."
   ln -s "/usr/share/${pkgname}/config/base.config.json" "${pkgdir}/etc/${pkgname}"
-
-  msg2 "Hiding readability of the configuration file for everyone except root..."
-  chmod 600 "${pkgdir}/usr/share/${pkgname}/config/base.config.json"
 
   msg2 "Copying systemd service configuration file..."
   install -Dm644 "${pkgdir}/usr/share/${pkgname}/system_config/sam-solution-daemon-client.service" \
     "${pkgdir}/usr/lib/systemd/system/sam-solution-daemon-client.service"
+
+  msg2 "Updating package ownership to root:root..."
+  chown -R root:root "${pkgdir}/"
+
+  msg2 "Hiding readability of the configuration file for everyone except root..."
+  chmod 600 "${pkgdir}/usr/share/${pkgname}/config/base.config.json"
 }
