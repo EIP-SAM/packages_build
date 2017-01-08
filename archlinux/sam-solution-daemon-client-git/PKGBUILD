@@ -1,0 +1,60 @@
+# Maintainer: Nicolas Chauvin <chauvin [dot] nico [at] gmail [dot] com>
+
+pkgname=sam-solution-daemon-client-git
+_pkgname=sam-solution-daemon-client
+_gitname=SAM-Solution-Daemon-Client
+pkgver=r70.fb2d828
+pkgrel=1
+pkgdesc="System Administration Manager Solution: Localhost controller"
+arch=(any)
+url="https://eip-sam.github.io/"
+license=('LGPL3')
+depends=('nodejs' 'git' 'libnotify')
+makedepends=('git' 'npm')
+conflicts=()
+provides=('sam-solution-daemon-client')
+source=("git+https://github.com/eip-sam/${_gitname}.git#branch=develop")
+sha256sums=('SKIP')
+
+pkgver() {
+  # generate a package version string from the git repository
+  cd "${_gitname}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+  cd "${_gitname}"
+  echo "copying example configuration files as default..."
+  for f in config/*config.json.example; do
+    cp -v "$f" "`echo $f | sed s/json.example/json/`"
+  done
+}
+
+build() {
+  cd "${_gitname}"
+  echo "installing npm dependancies..."
+  npm install
+
+  cd -
+  echo "replacing '\${pkgdir}' references by '/usr/share'..."
+  local -x _sed_substitute="s|`pwd`|/usr/share|g"
+  find ${_gitname}/ -type f -exec sed -i "$_sed_substitute" {} +
+}
+
+package() {
+  echo "creating target install directory..."
+  mkdir -p "${pkgdir}/usr/share/${_pkgname}"
+
+  echo "copying source files to target install directory..."
+  cp -a "${_gitname}"/* "${pkgdir}/usr/share/${_pkgname}/"
+
+  echo "creating system configuration directory..."
+  mkdir -p "${pkgdir}/etc/${_pkgname}"
+
+  echo "linking configuration file to system configuration directory..."
+  ln -s "/usr/share/${_pkgname}/config/base.config.json" "${pkgdir}/etc/${_pkgname}"
+
+  echo "copying systemd service configuration file..."
+  install -Dm644 "${_gitname}/system_config/sam-solution-daemon-client.service" \
+    "${pkgdir}/usr/lib/systemd/system/sam-solution-daemon-client.service"
+}
