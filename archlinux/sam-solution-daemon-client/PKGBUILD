@@ -22,11 +22,8 @@ package() {
   msg2 "Creating system configuration directory..."
   mkdir -p "${pkgdir}/etc/${pkgname}"
 
-  msg2 "Extracting source files to target install directory..."
-  tar xvf ${_pkgname}.tar.gz -C "${pkgdir}/usr/share/"
-
-  msg2 "Renaming extracted folder to match package name..."
-  mv "${pkgdir}/usr/share/${_pkgname}" "${pkgdir}/usr/share/${pkgname}"
+  msg2 "Moving extracted folder to target directory..."
+  mv "${_pkgname}" "${pkgdir}/usr/share/${pkgname}"
 
   msg2 "Linking configuration file to system configuration directory..."
   ln -s "/usr/share/${pkgname}/config/base.config.json" "${pkgdir}/etc/${pkgname}"
