@@ -3,7 +3,7 @@
 pkgname=sam-solution-daemon-client-git
 _pkgname=sam-solution-daemon-client
 _gitname=SAM-Solution-Daemon-Client
-pkgver=r70.fb2d828
+pkgver=r96.fed5113
 pkgrel=1
 pkgdesc="System Administration Manager Solution: Localhost controller"
 arch=(any)
@@ -62,5 +62,5 @@ package() {
   chown -R root:root "${pkgdir}/"
 
   msg2 "Hiding readability of the configuration file for everyone except root..."
-  chmod 600 "${pkgdir}/usr/share/${pkgname}/config/base.config.json"
+  chmod 600 "${pkgdir}/usr/share/${_pkgname}/config/base.config.json"
 }
