@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rm -rfv sam-solution-daemon-client_*
+rm -rf sam-solution-daemon-client_*
