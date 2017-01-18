@@ -5,13 +5,15 @@ export DEBFULLNAME="Nicolas Chauvin"
 export EMAIL="chauvin.nico@gmail.com"
 
 pkgname="sam-solution-daemon-client"
-pkgver="r70.fb2d828.rc1"
+pkgver="r96.fed5113.rc2"
 _pkgver="0${pkgver}" # debian packages cannot start with a letter
 arch="any"
 srcpkgname="${pkgname}_${pkgver}_build_${arch}"
 buildname="${pkgname}_${_pkgver}"
 debname="${pkgname}_${_pkgver}_${arch}"
-source="https://github.com/EIP-SAM/SAM-Solution-Daemon-Client/releases/download/${pkgver}/${srcpkgname}.tar.gz"
+_sourcebase="https://github.com/EIP-SAM/SAM-Solution-Daemon-Client/releases/download"
+source="${_sourcebase}/${pkgver}/${srcpkgname}.tar.gz"
+sha256source="${_sourcebase}/${pkgver}/${srcpkgname}.sha256.txt"
 
 echo "Creating debian package build directory..."
 mkdir "${buildname}"
@@ -44,6 +46,15 @@ sed -i "${maintainer_substitute}" "${buildname}/debian/control"
 
 echo "Downloading build package archive..."
 wget "${source}"
+echo "Downloading sha256 checksum file..."
+wget "${sha256source}"
+
+echo "Checking source archive checksum..."
+cat "${srcpkgname}.sha256.txt" | grep ".tar.gz" > "${srcpkgname}.tar.gz.sha256.txt"
+if ! sha256sum -c "${srcpkgname}.tar.gz.sha256.txt"; then
+    echo "Checksum comparaison failed for '${srcpkgname}.tar.gz'"
+    exit 1
+fi
 
 echo "Creating debian package target directories..."
 mkdir -p "${buildname}/usr/share/"
