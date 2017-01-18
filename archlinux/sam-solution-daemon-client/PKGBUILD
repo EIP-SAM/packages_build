@@ -1,7 +1,7 @@
 # Maintainer: Nicolas Chauvin <chauvin [dot] nico [at] gmail [dot] com>
 
 pkgname=sam-solution-daemon-client
-pkgver=r70.fb2d828.rc1
+pkgver=r96.fed5113.rc2
 pkgrel=1
 pkgdesc="System Administration Manager Solution: Localhost controller"
 arch=(any)
@@ -13,7 +13,7 @@ conflicts=('sam-solution-daemon-client-git')
 provides=('sam-solution-daemon-client')
 _pkgname=${pkgname}_${pkgver}_build_${arch}
 source=("https://github.com/EIP-SAM/SAM-Solution-Daemon-Client/releases/download/${pkgver}/${_pkgname}.tar.gz")
-sha256sums=('9a37eb41bf340358faaecced59214a9ea83e3cfb335251f2c70784cf505ff38e')
+sha256sums=('9b20484bd299787b498525f90fdf84d92ac1349e3c36355affe8338bfc56e7e7')
 
 package() {
   msg2 "Creating target install directory..."
