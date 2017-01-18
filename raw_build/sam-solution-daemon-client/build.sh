@@ -11,17 +11,18 @@ git clone https://github.com/EIP-SAM/${gitname}
 
 echo "Retrieving last repository tag as package version..."
 cd ${gitname}
-git checkout ${gitbranch}
-pkgver=`git tag -l --sort=refname "*.*.*" | head -n 1`
+pkgver=`git tag -l --sort=refname "*.*.*" | tail -n 1`
+echo "Checking out last repository tag's revision..."
+git checkout "tags/${pkgver}"
 cd -
 
 echo "Renaming repository to match package name..."
 pkgfullname="${pkgname}_${pkgver}_build_${arch}"
-mv ${gitname} ${pkgfullname}
+mv -v ${gitname} ${pkgfullname}
 
 echo "Installing npm dependencies..."
 cd ${pkgfullname}
-if ! npm install; then
+if ! npm install --production; then
     echo "Package build aborted!"
     exit 1
 fi
@@ -44,5 +45,8 @@ tar czf ${pkgfullname}.tar.gz ${pkgfullname}
 
 echo "Creating zip archive..."
 zip -r ${pkgfullname}.zip ${pkgfullname}
+
+echo "Creating sha256 hash files..."
+sha256sum ${pkgfullname}.tar.gz ${pkgfullname}.zip > ${pkgfullname}.sha256.txt
 
 exit 0
